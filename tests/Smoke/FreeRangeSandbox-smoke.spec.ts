@@ -1,7 +1,5 @@
 import { test, expect} from '@playwright/test';
 
-
-
 (async () => {
     
     const texToType = 'Testing ♥';
