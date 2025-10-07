@@ -186,7 +186,7 @@ import path from 'path';
             })           
         })
     
-        test.skip('Drag and Drop functionality should work correctly', async ({ page }) => {
+        test.fail('Drag and Drop functionality should work correctly', async ({ page }) => {
             //Test is not working
             const draggable = page.locator('#draggable'); 
             const dropTarget = page.locator('#droppable');

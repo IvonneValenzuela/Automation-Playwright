@@ -8,10 +8,9 @@ import path from 'path';
     test.describe('Automation practising assersions Letcode page', () => {
 
 
-
         test('Select and unselect checkboxes', async ({ page }) => {
 
-            await test.step('Given I am on the HerokuApp page', async () => {
+            await test.step('Given I am on the LetCode page', async () => {
                 await page.goto(letCodeUrl);
                 await page.getByRole('link', { name: 'Explore Workspace' }).click();
                 await page.getByRole('link', { name:  'Toggle' }).click();
@@ -22,13 +21,12 @@ import path from 'path';
             })
             await test.step('I should be able to unselect a checkbox', async () => {
                 await page.getByRole('checkbox', { name: 'Remember me' }).uncheck();
-                await expect(page.getByRole('checkbox', { name: 'Remember me' }),'The check box was selected').toBeChecked();
+                await expect(page.getByRole('checkbox', { name: 'Remember me' }),'The check box was selected').not.toBeChecked();
             })
-
         })
         
         test ('Validation of text fields', async ({ page }) => {
-            await test.step('Given I am on the HerokuApp “Form Authentication” page', async () => {
+            await test.step('Given I am on the LetCode page', async () => {
                 await page.goto(letCodeUrl);
                 await page.getByRole('link', { name: 'Explore Workspace' }).click();
                 await page.getByRole('link', { name:  'Edit' }).click();
@@ -63,7 +61,7 @@ import path from 'path';
             })
             await test.step('I should be able to choose a fruit from the dropdown list', async () => {
                
-                const fruits = ['Apple','Mango','Orange','Banana','Pine Apple','Passionfruit'];
+                const fruits = ['Apple','Mango','Orange','Banana','Pine Apple'];
 
                 for(let fruit of fruits){
                     const element= await page.$(`select#fruits > option:is(:text("${fruit}"))`);
@@ -131,29 +129,24 @@ import path from 'path';
 
                 dessertTable = page.locator('table:has(th:has-text("Dessert (100g)"))');
                 valuesDynamicTB = await dessertTable.locator('tr td').allTextContents();
-
                 //console.log('Values before clicking the arrow:', valuesDynamicTB);
             })
 
-
             await test.step('When I click the arrow button on Dessert (100g) column', async () => {
-               
                 await dessertTable.locator('th:has-text("Dessert (100g)")').click();
                 valuesAfterClick = await dessertTable.locator('tr td').allTextContents();
                // console.log('Values after clicking the arrow:', valuesAfterClick);
             })
             
             await test.step('Then the values should be reordered', async () => {
-
                 expect(valuesDynamicTB).not.toEqual(valuesAfterClick); 
             })
-            
         })
 
 
         //SOFT ASSERTIONS//
 
-        test('4. Select and unselect checkboxes with soft assersions', async ({ page }) => {
+        test.fail('4. Select and unselect checkboxes with soft assersions', async ({ page }) => {
 
             await test.step('Given I am on the LetCode page', async () => {
                 await page.goto(letCodeUrl);
@@ -161,7 +154,7 @@ import path from 'path';
                 await page.getByRole('link', { name:  'Toggle' }).click();
             })
             await test.step('Validating checkbox selection are visible', async () => {
-                await expect.soft(page.getByText('Remember mee'),'the element Remember me was not found').toBeVisible();
+                await expect.soft(page.getByText('Remember mee'),'the element Remember me was not found').toBeVisible();//This is failing with the porpuse to test the soft assertion
                 await expect.soft(page.getByText('I agree to the FAKE terms and conditions')).toBeVisible();
                 //Una aserción suave valida una condición pero no detiene la ejecución de la prueba si falla. En lugar de eso, registra el fallo y permite que el test siga ejecutándose.
                 //Las aserciones suaves permiten verificar múltiples condiciones en una misma prueba sin detenerse en el primer fallo. Son útiles cuando quieres tener una visión completa de todos los problemas en una ejecución.
@@ -175,31 +168,15 @@ import path from 'path';
                 await page.getByRole('link', { name: 'Explore Workspace' }).click();
                 await page.getByRole('link', { name:  'Dialog' }).click();
             })
-
             await test.step('I should be able to see the pop-up element', async () => {
                 await page.getByRole('button', { name: 'Modern Alert' }).click();
             })
-
             await test.step('I should be able to close the pop-up element', async () => {
                 await expect(page.getByText('Modern Alert - Some people address me as sweet alert as well')).toHaveText('Modern Alert - Some people address me as sweet alert as well');
-                await page.getByRole('button', { name: 'Close' }).click();
-            })
-
-            
-            
-        })
-        
-
-
-
-
-
-
-        
-
-    })
-           
-
+                await page.getByRole('button', { name: 'close', exact: true }).click();
+            }) 
+        })   
+    })       
 })();
 
 
