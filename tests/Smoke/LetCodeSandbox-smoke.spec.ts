@@ -5,7 +5,7 @@ import path from 'path';
     
     const letCodeUrl = 'https://letcode.in/test';
     const testingProjectText = 'Testing Project';
-    const pdfTestPath = path.join(__dirname, '../pdfprueba');
+    const pdfTestPath = path.join(__dirname, '../../pdfprueba');
     const threeSeconds = 3100;
 
     
