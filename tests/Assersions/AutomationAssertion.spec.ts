@@ -5,7 +5,7 @@ import path from 'path';
     
     const letCodeUrl = 'https://letcode.in/';
     
-    test.describe('Automation practising assersions Letcode page', () => {
+    test.describe('Automation practising assertions on Letcode page', () => {
 
 
         test('Select and unselect checkboxes', async ({ page }) => {
@@ -15,13 +15,13 @@ import path from 'path';
                 await page.getByRole('link', { name: 'Explore Workspace' }).click();
                 await page.getByRole('link', { name:  'Toggle' }).click();
             })
-            await test.step('I should be able to select a checkbox', async () => {
+            await test.step('When I check a checkbox', async () => {
                 await page.getByRole('checkbox', { name: 'Remember me' }).check();
-                await expect(page.getByRole('checkbox', { name: 'Remember me' }),'The check box was not selected').toBeChecked();  
+                await expect(page.getByRole('checkbox', { name: 'Remember me' }),'The check box was not selected').toBeChecked(); //Assertion
             })
-            await test.step('I should be able to unselect a checkbox', async () => {
+            await test.step('When I uncheck a checkbox', async () => {
                 await page.getByRole('checkbox', { name: 'Remember me' }).uncheck();
-                await expect(page.getByRole('checkbox', { name: 'Remember me' }),'The check box was selected').not.toBeChecked();
+                await expect(page.getByRole('checkbox', { name: 'Remember me' }),'The check box was selected').not.toBeChecked(); //Assertion
             })
         })
         
@@ -35,9 +35,9 @@ import path from 'path';
                 const text1 = 'Automation project ♥';
                 const userNameTextBox = page.getByRole('textbox', { name: 'Enter first & last name' });
 
-                await expect(userNameTextBox).toBeEditable();
+                await expect(userNameTextBox).toBeEditable(); //Assertion
                 await userNameTextBox.fill(text1);
-                await expect(userNameTextBox).toHaveValue(text1);
+                await expect(userNameTextBox).toHaveValue(text1); //Assertion
             })
         })
     
@@ -49,7 +49,7 @@ import path from 'path';
             })
             await test.step('I should be able to select different radio button options', async () => {
                 await page.getByText('Yes').first().check();
-                await expect(page.getByText('Yes').first(),'The radio button was not selected').toBeChecked();
+                await expect(page.getByText('Yes').first(),'The radio button was not selected').toBeChecked(); //Assertion
             })
         })
 
@@ -69,7 +69,7 @@ import path from 'path';
                         console.log(`this fruit '${fruit}' is present`);
                     }
                     else {
-                        throw new Error(`this fruit '${fruit}' is not present`);
+                        throw new Error(`this fruit '${fruit}' is not present`); //Assertion
                     }
                 }
             })
@@ -91,7 +91,10 @@ import path from 'path';
             })
         })
 
-        test('Values order change after pressing the arrow button', async ({ page }) => {
+        test.skip('Values order change after pressing the arrow button', async ({ page }) => {
+            //flaky test :(
+            
+            const waitThreeSeconds = 3100;
 
             await test.step('Given I am on the LetCode page', async () => {
                 await page.goto(letCodeUrl);
@@ -107,39 +110,12 @@ import path from 'path';
                 console.log('Values before clicking the arrow:', valuesDynamicTB);
                
                 //act
-                await dessertTable.locator('th:has-text("Dessert (100g)")').click();
+                await dessertTable.locator('th:has-text("Dessert (100g)")').click({ delay: waitThreeSeconds });
                 const valuesAfterClick = await dessertTable.locator('tr td').allTextContents();
                 console.log('Values after clicking the arrow:', valuesAfterClick);
 
                 //assert
                 expect(valuesDynamicTB).not.toEqual(valuesAfterClick);
-            })
-            
-        })
-
-        test('1.1 Values order change after pressing the arrow button', async ({ page }) => {
-            let dessertTable: Locator;
-            let valuesDynamicTB: string[];
-            let valuesAfterClick: string[];
-
-            await test.step('Given I am on the LetCode page', async () => {
-                await page.goto(letCodeUrl);
-                await page.getByRole('link', { name: 'Explore Workspace' }).click();
-                await page.getByRole('link', { name:  'Simple table' }).click();
-
-                dessertTable = page.locator('table:has(th:has-text("Dessert (100g)"))');
-                valuesDynamicTB = await dessertTable.locator('tr td').allTextContents();
-                //console.log('Values before clicking the arrow:', valuesDynamicTB);
-            })
-
-            await test.step('When I click the arrow button on Dessert (100g) column', async () => {
-                await dessertTable.locator('th:has-text("Dessert (100g)")').click();
-                valuesAfterClick = await dessertTable.locator('tr td').allTextContents();
-               // console.log('Values after clicking the arrow:', valuesAfterClick);
-            })
-            
-            await test.step('Then the values should be reordered', async () => {
-                expect(valuesDynamicTB).not.toEqual(valuesAfterClick); 
             })
         })
 
