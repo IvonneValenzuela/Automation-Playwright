@@ -109,7 +109,7 @@ import path from 'path';
                 console.log('Values before clicking the arrow:', valuesDynamicTB);
                
                 //act
-                await dessertTable.locator('th:has-text("Dessert (100g)")').click({delay: waitThreeSeconds});
+                await dessertTable.locator('th:has-text("Dessert (100g)")').click({ delay: waitThreeSeconds });
                 const valuesAfterClick = await dessertTable.locator('tr td').allTextContents();
                 console.log('Values after clicking the arrow:', valuesAfterClick);
 
