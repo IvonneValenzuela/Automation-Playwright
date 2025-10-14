@@ -10,3 +10,6 @@ playwright-report/index.html
 # General
 package-lock.json
 /tests-examples/
+.env
+
+#test
