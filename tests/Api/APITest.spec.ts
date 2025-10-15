@@ -5,7 +5,7 @@ const REPO = process.env.GH_REPO;
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 const THREE_SECONDS = 3000;
 
-test.beforeAll(async ({ request }) => {
+test.beforeAll(async ({ request }) => {//Using to create a new repo that we will delete after use it 
     const response = await request.post('user/repos', {
         data: {
             name: REPO
@@ -58,7 +58,7 @@ test('Verify the ability to create a feature request', async ({ request }) => {
     }));
 });
 
-test.afterEach(async ({ request }) => {
+test.afterEach(async ({ request }) => { //Using to delete the repo with the issues created on it
     const response = await request.delete(`/repos/${USER}/${REPO}`);
     expect(response.ok()).toBeTruthy();
 });
