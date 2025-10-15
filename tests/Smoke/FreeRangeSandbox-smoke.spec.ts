@@ -1,34 +1,46 @@
 import { test, expect} from '@playwright/test';
+import { FRSandboxPage } from '../Pageobjects/FRSandboxPage';
 
 (async () => {
     
-    const texToType = 'Testing ♥';
-    const urlBase = 'https://thefreerangetester.github.io/sandbox-automation-testing/';
-
+    
+    //const texToType = 'Testing ♥';
+    //const urlBase = 'https://thefreerangetester.github.io/sandbox-automation-testing/';
+    
     test.describe('Automation Freerange Sandbox', () => {
 
         test('Dynamic ID button reveals hidden element', async ({ page }) => {
+            const frSandbox = new FRSandboxPage (page);
 
             await test.step('Given I am on the Sandbox page', async () => {
-                await page.goto(urlBase);
+                // await page.goto(urlBase);
+                await frSandbox.open();
             })
+
             await test.step('When I click the dynamic ID button', async () => {
-                await page.getByRole('button', { name: 'Hacé click para generar un ID' }).click();
-            })  
+                //await page.getByRole('button', { name: 'Hacé click para generar un ID' }).click();
+                await frSandbox.clickOnDynamicButton();
+            })
+
             await test.step('Then I should see the delayed message', async () => {
-                await expect(page.getByText('OMG, aparezco después de 3 segundos de haber hecho click en el botón 👻.')).toBeVisible();
+                //     await expect(page.getByText('OMG, aparezco después de 3 segundos de haber hecho click en el botón 👻.')).toBeVisible();
+                await expect(frSandbox.delayedGhostMessage).toBeVisible();
             })
         })
     
         test('Text field input should work correctly', async ({ page }) => {
+            const frSandbox = new FRSandboxPage (page);
             await test.step('Given I am on the Sandbox page of Free Range Testers', async () => {
-                await page.goto(urlBase);
+                //await page.goto(urlBase);
+                await frSandbox.open();
             })
             await test.step('When I type text into the "Un aburrido texto" field', async () => {
-                await page.getByRole('textbox', { name: 'Un aburrido texto' }).fill(texToType);
+                //await page.getByRole('textbox', { name: 'Un aburrido texto' }).fill(texToType);
+                await frSandbox.fillFieldInput();
             }) 
             await test.step('Then the text should be displayed in the field', async () => {
-                await expect(page.getByRole('textbox', {name: 'Un aburrido texto'})).toHaveValue(texToType);
+                //await expect(page.getByRole('textbox', {name: 'Un aburrido texto'})).toHaveValue(texToType);
+                await expect(frSandbox.textDisplayedOnField).toHaveValue('Testing ♥');
             })    
         })
     
@@ -103,7 +115,7 @@ import { test, expect} from '@playwright/test';
                 await page.getByRole('button', { name: 'Cerrar' }).click();
             })
         })
-    })  
+    });  
       
 })();
 
