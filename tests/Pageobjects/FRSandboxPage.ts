@@ -67,6 +67,8 @@ export class FRSandboxPage {
     async clickOnDynamicButton(){
        await this.dynamicButton.click();
     }
+
+    
     async fillTextInput(textTyped : string){
         await this.textInput.fill(textTyped);
     }
@@ -83,7 +85,7 @@ export class FRSandboxPage {
     async selectSiRadioButton(){
         await this.siRadioButton.check();
     }
-    async selectTennis(){
+    async selectTennisOption(){
         await this.tennisDropdownOption.selectOption('Tennis');
     }
 
@@ -94,9 +96,12 @@ export class FRSandboxPage {
         await option.waitFor({ state: 'visible' });
         await option.click();
     }
-
+    async getCurrentUrl(): Promise<string> {
+        return this.page.url();
+    }
+    
     //Popup Messages
-    async openPopup(){
+    async openPopupMessage(){
         await this.popupButton.click();
     }
     async closePopupMessage(){
