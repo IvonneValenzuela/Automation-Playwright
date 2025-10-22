@@ -35,9 +35,7 @@ export class LCSandboxPage {
 
     constructor(page: Page) {
         this.page = page;
-        
-    
-                
+           
         //Dynamic button
         this.buttonSection = page.getByRole('link', { name:  'Click' });
         this.dynamicButton = page.getByRole('button', { name: 'Button Hold!' });
@@ -63,7 +61,7 @@ export class LCSandboxPage {
         //Upload file
         this.fileSection = page.getByRole('link', { name: 'File management' });
         this.uploadFileSection = page.getByLabel(' Choose a file… ');
-        this,this.selectedFileMessage = page.getByText('Selected File');
+        this.selectedFileMessage = page.getByText('Selected File');
         
     }
 
