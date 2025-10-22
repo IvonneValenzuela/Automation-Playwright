@@ -1,8 +1,6 @@
 
 import { test, expect } from '@playwright/test';
-import { LCSandboxPage, RadioLabels } from '../Pageobjects/LCSandboxPage';
-import { RadioButtonOption,RadioButtonOption3, RadioButtonOption2 } from '../constants/common';
-
+import { LCSandboxPage } from '../Pageobjects/LCSandboxPage';
 
 test.describe('Smoke test on Letcode Sandbox page', () => {
     let letCodeSandboxPage : LCSandboxPage;
@@ -41,42 +39,21 @@ test.describe('Smoke test on Letcode Sandbox page', () => {
         
         await letCodeSandboxPage.goToRadioSection();
         await letCodeSandboxPage.selectRadioButton('Select any one', 'Yes');
-        expect(await letCodeSandboxPage.radioButtonSelected('Select any one', 'Yes')).toBe(true);
+        expect(await letCodeSandboxPage.isRadioButtonSelected('Select any one', 'Yes')).toBe(true);
         
         await letCodeSandboxPage.selectRadioButton('Cofirm you can select only one radio button', 'No');
-        expect(await letCodeSandboxPage.radioButtonSelected('Cofirm you can select only one radio button', 'No')).toBe(true);
+        expect(await letCodeSandboxPage.isRadioButtonSelected('Cofirm you can select only one radio button', 'No')).toBe(true);
 
         await letCodeSandboxPage.selectRadioButton('Find the bug', 'No');
-        expect(await letCodeSandboxPage.radioButtonSelected('Find the bug', 'No')).toBe(true);
+        expect(await letCodeSandboxPage.isRadioButtonSelected('Find the bug', 'No')).toBe(true);
 
         await letCodeSandboxPage.selectRadioButton('Find which one is selected', 'Bar');
-        expect(await letCodeSandboxPage.radioButtonSelected('Find which one is selected', 'Bar')).toBe(true);
+        expect(await letCodeSandboxPage.isRadioButtonSelected('Find which one is selected', 'Bar')).toBe(true);
 
         await letCodeSandboxPage.selectRadioButton('Confirm last field is disabled', 'Going');
-        expect(await letCodeSandboxPage.radioButtonSelected('Confirm last field is disabled', 'Going')).toBe(true);
+        expect(await letCodeSandboxPage.isRadioButtonSelected('Confirm last field is disabled', 'Going')).toBe(true);
 
-    })
-
-    test('1.2 Radio button selection should work correctly', async ({}) => {
-        
-        await letCodeSandboxPage.goToRadioSection();
-        await letCodeSandboxPage.selectRadioYesOrNoByText(RadioLabels.SelectAnyOne, RadioButtonOption.Yes);  
-        expect(letCodeSandboxPage.selectRadioYesOrNoByText).toBeTruthy();//Como se valida que se ahya elegido el Yes
-
-        await letCodeSandboxPage.selectRadioYesOrNoByText(RadioLabels.CofirmYouCanSelectOnlyOneRadioButton, RadioButtonOption.No);
-        expect(letCodeSandboxPage.selectRadioYesOrNoByText).toBeTruthy();
-
-        await letCodeSandboxPage.selectRadioYesOrNoByText(RadioLabels.FindTheBug, RadioButtonOption.Yes);
-        expect(letCodeSandboxPage.selectRadioYesOrNoByText).toBeTruthy();
-
-        await letCodeSandboxPage.selectRadioFooBarByText(RadioButtonOption2.Foo);
-        expect(letCodeSandboxPage.selectRadioFooBarByText).toBeTruthy();
-
-        await letCodeSandboxPage.selectRadioGoingNotGoingMaybeByText(RadioButtonOption3.NotGoing);
-        expect (letCodeSandboxPage.selectRadioGoingNotGoingMaybeByText).toBeTruthy();
-
-    })
-    
+    })    
 
     test('1.1 Fuit Dropdown selection should work correctly', async ({}) => {
         
@@ -94,7 +71,6 @@ test.describe('Smoke test on Letcode Sandbox page', () => {
         expect (selected.label).toBe('Mango');
     })
 
-
     test('Programming language dropdown selection should work correctly', async ({}) => {
 
         await letCodeSandboxPage.goToDropdownSection();
@@ -103,12 +79,12 @@ test.describe('Smoke test on Letcode Sandbox page', () => {
         //await expect(letCodeSandboxPage.selectedMessageDisplayed).toContainText('Python')  
     })
 
-    test('Select the last programming language and print all the options should work correctly', async ({ page }) => {
+    test('Select the last programming language and print all the options should work correctly', async ({}) => {
 
         await letCodeSandboxPage.goToDropdownSection();
         await letCodeSandboxPage.selectProgramingLanguageByValue('C#');
         await expect(letCodeSandboxPage.selectedMessageDisplayed).toHaveText('You have selected C#')
-        console.log();//no se como hacerlo
+        console.log((await letCodeSandboxPage.getProgramingLanguages().allInnerTexts()).join());
     })
 
 

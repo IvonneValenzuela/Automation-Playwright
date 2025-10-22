@@ -1,14 +1,7 @@
 
 // pages/LCSandboxPage.ts
 import {type Locator, type Page } from '@playwright/test';
-import { holdThreeSeconds, RadioButtonOption, RadioButtonOption2, RadioButtonOption3, pdfTestPath } from '../constants/common';
-import path from 'path';
-
-export enum RadioLabels {
-    SelectAnyOne = "Select any one", 
-    CofirmYouCanSelectOnlyOneRadioButton = "Cofirm you can select only one radio button",
-    FindTheBug = "Find the bug"
-}
+import { holdThreeSeconds, pdfTestPath } from '../constants/common';
 
 export class LCSandboxPage {
 
@@ -31,10 +24,6 @@ export class LCSandboxPage {
     readonly dropdownSection: Locator
     readonly fruitDropdown: Locator
     readonly selectedMessageDisplayed: Locator
-
-    private groupByTitle(title: string) {
-        return this.page.locator('.field').filter({ hasText: title });
-    }
 
     readonly programmingLanguageDropdown: Locator
 
@@ -113,50 +102,19 @@ export class LCSandboxPage {
 
     //Radio button (Option 1.1)
 
+    private getFieldLocatorByTitle(title: string) {
+        return this.page.locator('.field').filter({ hasText: title });
+    }
+
     async selectRadioButton(title: string, optionText: string) {
-        const group = this.groupByTitle(title);
-        await group.getByLabel(optionText, { exact: true }).check();
+        const locator = this.getFieldLocatorByTitle(title);
+        await locator.getByLabel(optionText, { exact: true }).check();
     }
 
-    async radioButtonSelected(title: string, optionText: string) {
-        const group = this.groupByTitle(title);
-        return group.getByLabel(optionText, { exact: true }).isChecked();
-    }
-
-    //Radio button (Option 1.2)
-
-    async selectRadioYesOrNoByText(
-        radioLabel: RadioLabels, 
-        radioButtonOption: RadioButtonOption) {  
-        let radio: Locator;
-
-        if (radioLabel === RadioLabels.SelectAnyOne) {
-            radio = this.page.getByText(radioButtonOption.toString()).first();
-                         
-        } else if (radioLabel === RadioLabels.CofirmYouCanSelectOnlyOneRadioButton) {
-            radio = this.page.getByText(radioButtonOption.toString()).nth(1);
-
-        } else if (radioLabel === RadioLabels.FindTheBug) {
-            radio = this.page.getByText(radioButtonOption.toString()).nth(2);
-        } else 
-        {
-            radio = this.page.getByText(radioButtonOption.toString()).nth(2);
-        }
-        //const radio = this.page.getByText(radioButtonOption.toString(), { exact: true });        
-        await radio.check();  
-    }
-
-    async selectRadioFooBarByText(radioButtonOption2: RadioButtonOption2) {  
-        const radio = this.page.getByText(radioButtonOption2.toString());
-        await radio.check();
-    }  
-
-    async selectRadioGoingNotGoingMaybeByText(radioButtonOption3: RadioButtonOption3) {  
-        const radio = this.page.getByText(radioButtonOption3.toString());
-        await radio.check();  
-    }
-
-    
+    async isRadioButtonSelected(title: string, optionText: string) {        
+        const locator = this.getFieldLocatorByTitle(title);
+        return locator.getByLabel(optionText, { exact: true }).isChecked();
+    }    
 
     //Fruit Dropdown (option 1.1)
 
@@ -188,8 +146,12 @@ export class LCSandboxPage {
 
     //Programming language Dropdown
     
-    async selectProgramingLanguageByValue(value:string){
+    async selectProgramingLanguageByValue(value: string) {
         await this.programmingLanguageDropdown.selectOption(value);
+    }
+
+    getProgramingLanguages() {
+        return this.programmingLanguageDropdown;
     }
 
     //Upload file
