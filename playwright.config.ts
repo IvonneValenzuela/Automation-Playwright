@@ -30,11 +30,23 @@ export default defineConfig({
     // baseURL: 'http://localhost:3000',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: 'on',
+    video: 'retain-on-failure',
   },
 
   /* Configure projects for major browsers */
   projects: [
+    
+    {
+      name: 'Google Chrome',
+      use: { ...devices['Desktop Chrome'] },
+    },
+    
+    {
+      name: 'Firefox',
+      use: { ...devices['Desktop Firefox'] },
+    },
+
     {
       name: 'API TEST',
       testMatch: ['tests/Api/**/*.spec.ts'],
@@ -47,23 +59,25 @@ export default defineConfig({
       },
     },
 
-    {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-    },
-    
-
-    /* {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    }, */
-
     //{
       //name: 'webkit',
       //use: { ...devices['Desktop Safari'] },
    // },
 
-    /* Test against mobile viewports. */
+    //Test against mobile viewports. 
+
+    {
+      name: 'iPhone 13',
+      use: { ...devices['iPhone 13'] },
+    }, 
+
+    {
+      name: 'iPad',
+      use: { ...devices['iPad (gen 7)'] },
+    }, 
+
+
+
     // {
     //   name: 'Mobile Chrome',
     //   use: { ...devices['Pixel 5'] },
@@ -90,4 +104,5 @@ export default defineConfig({
   //   url: 'http://localhost:3000',
   //   reuseExistingServer: !process.env.CI,
   // },
+
 });
