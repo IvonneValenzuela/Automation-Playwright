@@ -16,7 +16,7 @@ import { test, Browser, Page, expect } from '@playwright/test';
     for (const seccion of secciones) {
       test(`Validar redirección a la sección "${seccion.nombre}"`, async ({ page }) => {
         await test.step(`Estando yo en la web principal www.freerangetesters.com`, async () => {
-          page.goto('https://www.freerangetesters.com');
+          page.goto('https://www.freerangetesters.com/');
           await expect(page).toHaveTitle('Free Range Testers');
         });
 
