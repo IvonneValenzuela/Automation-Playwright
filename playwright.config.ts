@@ -30,14 +30,39 @@ export default defineConfig({
     // baseURL: 'http://localhost:3000',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: 'on',
+    video: 'retain-on-failure',
   },
 
   /* Configure projects for major browsers */
   projects: [
+    
+    /*   
+      - Api Tests are not expected to be run against any device
+      - Navegacion2.spec.ts is expected to only be run in Chrome to avoid parallel runs
+    */
+    // 🌐 Desktop
+    {
+      name: 'Google Chrome',
+      use: { ...devices['Desktop Chrome'] },
+      testIgnore: ['tests/[Aa]pi/**'],
+    },
+    
+    {
+      name: 'Firefox',
+      use: { ...devices['Desktop Firefox'] },
+      testIgnore: [
+        'tests/[Aa]pi/**',
+        'tests/Navegacion2.spec.ts',
+      
+      
+      ],
+    },
+
+    // 🔗 API (API specs only)
     {
       name: 'API TEST',
-      testMatch: ['tests/Api/**/*.spec.ts'],
+      testMatch: ['tests/Api/**/*.spec1.ts'],
       use: {  
         baseURL:'https://api.github.com',
         extraHTTPHeaders: {
@@ -45,25 +70,37 @@ export default defineConfig({
 	        'Authorization': `token ${process.env.API_TOKEN}`,
         }
       },
+      workers: 1,
     },
-
-    {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-    },
-    
-
-    /* {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    }, */
 
     //{
       //name: 'webkit',
       //use: { ...devices['Desktop Safari'] },
    // },
 
-    /* Test against mobile viewports. */
+    //📱 Test against mobile viewports.
+
+    {
+      name: 'iPhone 13',
+      use: { ...devices['iPhone 13'] },
+      testIgnore: [
+        'tests/[Aa]pi/**',
+        'tests/Navegacion2.spec.ts'
+
+      ],
+    }, 
+
+    {
+      name: 'iPad',
+      use: { ...devices['iPad (gen 7)'] },
+      testIgnore: [
+        'tests/[Aa]pi/**',
+        'tests/Navegacion2.spec.ts'
+
+      ],
+    }, 
+
+
     // {
     //   name: 'Mobile Chrome',
     //   use: { ...devices['Pixel 5'] },
@@ -90,4 +127,5 @@ export default defineConfig({
   //   url: 'http://localhost:3000',
   //   reuseExistingServer: !process.env.CI,
   // },
+
 });
