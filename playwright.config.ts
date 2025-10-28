@@ -62,7 +62,7 @@ export default defineConfig({
     // 🔗 API (API specs only)
     {
       name: 'API TEST',
-      testMatch: ['tests/Api/**/*.spec.ts'],
+      testMatch: ['tests/Api/**/*.spec1.ts'],
       use: {  
         baseURL:'https://api.github.com',
         extraHTTPHeaders: {
