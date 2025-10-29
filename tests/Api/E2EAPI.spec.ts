@@ -1,8 +1,8 @@
 import { test, expect, APIRequestContext } from '@playwright/test';
 
 const USER = process.env.GH_USER;
-const REPO = process.env.GH_REPO;
-const TOKEN = process.env.API_TOKEN;
+const REPO = process.env.GH_MAIN_REPO;
+const TOKEN = process.env.API_MAIN_TOKEN;
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 const THREE_SECONDS = 3000;
 

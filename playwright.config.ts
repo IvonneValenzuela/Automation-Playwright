@@ -45,7 +45,9 @@ export default defineConfig({
     {
       name: 'Google Chrome',
       use: { ...devices['Desktop Chrome'] },
-      testIgnore: ['tests/[Aa]pi/**'],
+      testIgnore: [
+        'tests/[Aa]pi/**',
+      ],
     },
     
     {
@@ -54,20 +56,37 @@ export default defineConfig({
       testIgnore: [
         'tests/[Aa]pi/**',
         'tests/Navegacion2.spec.ts',
-      
-      
       ],
     },
 
     // 🔗 API (API specs only)
     {
-      name: 'API TEST',
-      testMatch: ['tests/Api/**/*.spec1.ts'],
+      name: 'APITestonMain',
+      testMatch: [
+        'tests/Api/APITestOnMain.spec.ts',
+        'tests/Api/E2EAPI.spec.ts'
+      ],
       use: {  
         baseURL:'https://api.github.com',
         extraHTTPHeaders: {
 	        'Accept': 'application/vnd.github.v3+json',
-	        'Authorization': `token ${process.env.API_TOKEN}`,
+	        'Authorization': `token ${process.env.API_MAIN_TOKEN}`,
+        }
+      },
+      workers: 1,
+    },
+
+    {
+      name: 'APITest',
+      testMatch: [
+        'tests/Api/APITest.spec.ts',
+        'tests/Api/APIMock.spec.ts'
+      ],
+      use: {  
+        baseURL:'https://api.github.com',
+        extraHTTPHeaders: {
+	        'Accept': 'application/vnd.github.v3+json',
+	        'Authorization': `token ${process.env.API_TEST_TOKEN}`,
         }
       },
       workers: 1,
@@ -79,14 +98,12 @@ export default defineConfig({
    // },
 
     //📱 Test against mobile viewports.
-
     {
       name: 'iPhone 13',
       use: { ...devices['iPhone 13'] },
       testIgnore: [
         'tests/[Aa]pi/**',
         'tests/Navegacion2.spec.ts'
-
       ],
     }, 
 
@@ -96,7 +113,6 @@ export default defineConfig({
       testIgnore: [
         'tests/[Aa]pi/**',
         'tests/Navegacion2.spec.ts'
-
       ],
     }, 
 
