@@ -43,7 +43,7 @@ async function createVerifyAndDeleteIssue (request: APIRequestContext, title: st
     expect(issueFound).toBeTruthy();
     console.log('🕵️ Found issue:', issueFound.number);
 
-    // --- DELETE ISSUE (clean up) ---
+    // --- CLOSE ISSUE (clean up) ---
     const closeIssue = await request.patch(
         `/repos/${USER}/${REPO}/issues/${issueFound.number}`,
         {

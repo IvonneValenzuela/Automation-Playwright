@@ -63,7 +63,7 @@ export default defineConfig({
     {
       name: 'APITestonMain',
       testMatch: [
-        'tests/Api/APITestOnMain.spec.ts',
+        'Api/mainRepo/**/*.spec.ts',
         'tests/Api/E2EAPI.spec.ts'
       ],
       use: {  
@@ -79,8 +79,8 @@ export default defineConfig({
     {
       name: 'APITest',
       testMatch: [
-        'tests/Api/APITest.spec.ts',
-        'tests/Api/APIMock.spec.ts'
+        'Api/repoLifecycle/**/*.spec.ts',
+        'Api/mock/**/*.spec.ts'
       ],
       use: {  
         baseURL:'https://api.github.com',
