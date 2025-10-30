@@ -11,6 +11,10 @@ let createdIssueNumber: number;
 
 
 test.beforeAll(async ({ playwright }) => {
+    if (!TOKEN || !USER || !REPO) {
+        throw new Error('Missing env vars: API_MAIN_TOKEN, GH_USER, or GH_MAIN_REPO');
+    }
+
     apiContext = await playwright.request.newContext({
         baseURL: 'https://api.github.com',
         extraHTTPHeaders: {

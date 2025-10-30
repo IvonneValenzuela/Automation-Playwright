@@ -58,7 +58,7 @@ test('Verify the ability to create a feature request', async ({ request }) => {
     }));
 });
 
-test.afterEach(async ({ request }) => { //Using to delete the repo with the issues created on it
+test.afterAll(async ({ request }) => { //Using to delete the repo with the issues created on it
     const response = await request.delete(`/repos/${USER}/${REPOTEST}`);
     expect(response.ok()).toBeTruthy();
 });
