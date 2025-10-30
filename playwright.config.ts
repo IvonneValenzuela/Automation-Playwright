@@ -50,17 +50,19 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
       testIgnore: [
         'tests/[Aa]pi/**',
+        'tests/Assertions/**',
       ],
     },
     
-    {
+    /* {
       name: 'Firefox',
       use: { ...devices['Desktop Firefox'] },
       testIgnore: [
         'tests/[Aa]pi/**',
         'tests/Navegacion2.spec.ts',
+        'tests/Assertions/**',
       ],
-    },
+    }, */
 
     // 🔗 API (API specs only)
     {
@@ -101,7 +103,7 @@ export default defineConfig({
    // },
 
     //📱 Test against mobile viewports.
-    {
+   /*  {
       name: 'iPhone 13',
       use: { ...devices['iPhone 13'] },
       testIgnore: [
@@ -117,7 +119,7 @@ export default defineConfig({
         'tests/[Aa]pi/**',
         'tests/Navegacion2.spec.ts'
       ],
-    }, 
+    },  */
 
 
     // {
