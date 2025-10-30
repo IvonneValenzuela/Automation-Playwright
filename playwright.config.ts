@@ -23,7 +23,10 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: [
+    ['list'],
+    ['html', { open: 'always', port: 0 }],
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
@@ -45,7 +48,9 @@ export default defineConfig({
     {
       name: 'Google Chrome',
       use: { ...devices['Desktop Chrome'] },
-      testIgnore: ['tests/[Aa]pi/**'],
+      testIgnore: [
+        'tests/[Aa]pi/**',
+      ],
     },
     
     {
@@ -54,20 +59,37 @@ export default defineConfig({
       testIgnore: [
         'tests/[Aa]pi/**',
         'tests/Navegacion2.spec.ts',
-      
-      
       ],
     },
 
     // 🔗 API (API specs only)
     {
-      name: 'API TEST',
-      testMatch: ['tests/Api/**/*.spec1.ts'],
+      name: 'APITestonMain',
+      testMatch: [
+        'Api/mainRepo/**/*.spec.ts',
+        'tests/Api/E2EAPI.spec.ts'
+      ],
       use: {  
         baseURL:'https://api.github.com',
         extraHTTPHeaders: {
 	        'Accept': 'application/vnd.github.v3+json',
-	        'Authorization': `token ${process.env.API_TOKEN}`,
+	        'Authorization': `token ${process.env.API_MAIN_TOKEN}`,
+        }
+      },
+      workers: 1,
+    },
+
+    {
+      name: 'APITest',
+      testMatch: [
+        'Api/repoLifecycle/**/*.spec.ts',
+        'Api/mock/**/*.spec.ts'
+      ],
+      use: {  
+        baseURL:'https://api.github.com',
+        extraHTTPHeaders: {
+	        'Accept': 'application/vnd.github.v3+json',
+	        'Authorization': `token ${process.env.API_TEST_TOKEN}`,
         }
       },
       workers: 1,
@@ -79,14 +101,12 @@ export default defineConfig({
    // },
 
     //📱 Test against mobile viewports.
-
     {
       name: 'iPhone 13',
       use: { ...devices['iPhone 13'] },
       testIgnore: [
         'tests/[Aa]pi/**',
         'tests/Navegacion2.spec.ts'
-
       ],
     }, 
 
@@ -96,7 +116,6 @@ export default defineConfig({
       testIgnore: [
         'tests/[Aa]pi/**',
         'tests/Navegacion2.spec.ts'
-
       ],
     }, 
 
