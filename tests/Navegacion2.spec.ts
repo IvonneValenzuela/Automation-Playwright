@@ -15,7 +15,7 @@ test.describe('Navegación en www.freerangetesters.com', () => {
     test(`Validar redirección a la sección "${seccion.nombre}"`, async ({ page }) => {
       await test.step(`Estando yo en la web principal www.freerangetesters.com`, async () => {
         await page.goto('https://www.freerangetesters.com', { waitUntil: 'domcontentloaded' });
-        await expect(page).toHaveTitle(/Free Range Testers/i);
+        await expect(page).toHaveTitle(/Free Range Testers/i); // 'i' makes it non-case-sensitive
       });
 
       await test.step(`Cuando hago click en "${seccion.nombre}"`, async () => {
