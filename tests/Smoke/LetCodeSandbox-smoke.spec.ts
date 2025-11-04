@@ -20,7 +20,7 @@ test.describe('Smoke test on Letcode Sandbox page', () => {
     test('Text field accepts user input and displays it correctly', async ({}) => {
         
         await letCodeSandboxPage.goToInputSection();
-        await letCodeSandboxPage.typeTextIntofullNameTextBox('Margarita');
+        await letCodeSandboxPage.typeTextIntoFullNameTextBox('Margarita');
         await expect(letCodeSandboxPage.fullNameTextBox).toBeEditable();
         await expect(letCodeSandboxPage.fullNameTextBox).toHaveValue('Margarita');
     })
@@ -65,26 +65,25 @@ test.describe('Smoke test on Letcode Sandbox page', () => {
     test('1.2 Fuit Dropdown selection should work correctly', async ({}) => {
         
         await letCodeSandboxPage.goToDropdownSection();
-        await letCodeSandboxPage.selectFruitByLabelAndValue('Mango','1');
+        await letCodeSandboxPage.selectFruitByLabelAndValue('Orange','2');
         const selected = await letCodeSandboxPage.getSelectedFruit();
-        expect (selected.value).toBe('1');
-        expect (selected.label).toBe('Mango');
+        expect (selected.value).toBe('2');
+        expect (selected.label).toBe('Orange');
     })
 
     test('Programming language dropdown selection should work correctly', async ({}) => {
 
         await letCodeSandboxPage.goToDropdownSection();
-        await letCodeSandboxPage.selectProgramingLanguageByValue('py');
+        await letCodeSandboxPage.selectProgrammingLanguageByValue('py');
         await expect(letCodeSandboxPage.selectedMessageDisplayed).toHaveText('You have selected Python')
-        //await expect(letCodeSandboxPage.selectedMessageDisplayed).toContainText('Python')  
     })
 
     test('Select the last programming language and print all the options should work correctly', async ({}) => {
 
         await letCodeSandboxPage.goToDropdownSection();
-        await letCodeSandboxPage.selectProgramingLanguageByValue('C#');
+        await letCodeSandboxPage.selectProgrammingLanguageByValue('C#');
         await expect(letCodeSandboxPage.selectedMessageDisplayed).toHaveText('You have selected C#')
-        console.log((await letCodeSandboxPage.getProgramingLanguages().allInnerTexts()).join());
+        console.log((await letCodeSandboxPage.getProgrammingLanguages().allInnerTexts()).join());
     })
 
 
@@ -92,7 +91,7 @@ test.describe('Smoke test on Letcode Sandbox page', () => {
 
         await letCodeSandboxPage.goToFileSection();
         await letCodeSandboxPage.uploadFile();
-        await expect(letCodeSandboxPage.selectedFileMessage).toContainText('Selected File');
+        await expect(letCodeSandboxPage.selectedFileMessage).toBeVisible();
     })
 
 });

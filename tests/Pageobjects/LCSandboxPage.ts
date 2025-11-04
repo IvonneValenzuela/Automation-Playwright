@@ -1,7 +1,7 @@
 
 // pages/LCSandboxPage.ts
-import {type Locator, type Page } from '@playwright/test';
-import { holdThreeSeconds, pdfTestPath } from '../constants/common';
+import { type Locator, type Page } from '@playwright/test';
+import { holdThreeSeconds, pdfTestPath, waitForDomLoaded } from '../constants/common';
 
 export class LCSandboxPage {
 
@@ -30,14 +30,14 @@ export class LCSandboxPage {
     readonly fileSection: Locator
     readonly uploadFileSection: Locator
     readonly selectedFileMessage: Locator
-    
-    
+
+
 
     constructor(page: Page) {
         this.page = page;
-           
+
         //Dynamic button
-        this.buttonSection = page.getByRole('link', { name:  'Click' });
+        this.buttonSection = page.getByRole('link', { name: 'Click' });
         this.dynamicButton = page.getByRole('button', { name: 'Button Hold!' });
         this.delayedMessageVisible = page.getByText('Button has been long pressed');
 
@@ -62,104 +62,108 @@ export class LCSandboxPage {
         this.fileSection = page.getByRole('link', { name: 'File management' });
         this.uploadFileSection = page.getByLabel(' Choose a file… ');
         this.selectedFileMessage = page.getByText('Selected File');
-        
+
     }
 
 
     // Navigation
-    async open() {
+    async open(): Promise<void> {
         await this.page.goto(this.url);
     }
 
     //Dynamic button
-    async goToButtonSection(){
-       await this.buttonSection.click();
+    async goToButtonSection(): Promise<void> {
+        await this.buttonSection.click();
+        await waitForDomLoaded(this.page);
     }
-    async clickOnDynamicButtonHold(){
-        await this.dynamicButton.click({delay: holdThreeSeconds});
+    async clickOnDynamicButtonHold(): Promise<void> {
+        await this.dynamicButton.click({ delay: holdThreeSeconds });
     }
 
     //Input 
-    async goToInputSection(){
+    async goToInputSection(): Promise<void> {
         await this.inputSection.click();
     }
-    async typeTextIntofullNameTextBox(text: string){
+    async typeTextIntoFullNameTextBox(text: string): Promise<void> {
         await this.fullNameTextBox.fill(text);
     }
 
     //Checkbox
-    async goToRadioSection(){
+    async goToRadioSection(): Promise<void> {
         await this.radioSection.click();
+        await waitForDomLoaded(this.page);
     }
-    async checkRememberMeCheckbox(){
+    async checkRememberMeCheckbox(): Promise<void> {
         await this.rememberMeCheckbox.check();
     }
-    async uncheckRememberMeCheckbox(){
+    async uncheckRememberMeCheckbox(): Promise<void> {
         await this.rememberMeCheckbox.uncheck();
     }
 
     //Radio button (Option 1.1)
 
-    private getFieldLocatorByTitle(title: string) {
+    private getFieldLocatorByTitle(title: string): Locator {
         return this.page.locator('.field').filter({ hasText: title });
     }
 
-    async selectRadioButton(title: string, optionText: string) {
+    async selectRadioButton(title: string, optionText: string): Promise<void> {
         const locator = this.getFieldLocatorByTitle(title);
         await locator.getByLabel(optionText, { exact: true }).check();
     }
 
-    async isRadioButtonSelected(title: string, optionText: string) {        
+    async isRadioButtonSelected(title: string, optionText: string): Promise<boolean> {
         const locator = this.getFieldLocatorByTitle(title);
-        return locator.getByLabel(optionText, { exact: true }).isChecked();
-    }    
+        return await locator.getByLabel(optionText, { exact: true }).isChecked();
+    }
 
     //Fruit Dropdown (option 1.1)
 
-    async goToDropdownSection(){
+    async goToDropdownSection(): Promise<void> {
         await this.dropdownSection.click();
+        await waitForDomLoaded(this.page);
     }
-    async selectFruitByLabel(label: string) { 
+    async selectFruitByLabel(label: string): Promise<void> {
         await this.fruitDropdown.selectOption({ label });
     }
-    
+
     //Fruit Dropdown (option 1.2)
 
-    async selectFruitByValue(value: string) {
+    async selectFruitByValue(value: string): Promise<void> {
         await this.fruitDropdown.selectOption(value);
     }
-    async selectFruitByLabelAndValue(label: string, value: string) {
+    async selectFruitByLabelAndValue(label: string, value: string): Promise<void> {
         await this.fruitDropdown.selectOption({ label, value });
     }
-    async getSelectedFruit() {
-  
+    async getSelectedFruit(): Promise<{ value: string; label: string }> {
         const value = await this.fruitDropdown.inputValue();
 
-        const label = await this.page
-        .locator(`#fruits option[value="${value}"]`)
-        .textContent();
+        const rawLabel = await this.page
+            .locator(`#fruits option[value="${value}"]`)
+            .textContent();
 
-        return { value, label: label?.trim() || '' };
+        const label = (rawLabel ?? '').trim();
+
+        return { value, label };
     }
 
     //Programming language Dropdown
-    
-    async selectProgramingLanguageByValue(value: string) {
+
+    async selectProgrammingLanguageByValue(value: string): Promise<void> {
         await this.programmingLanguageDropdown.selectOption(value);
     }
 
-    getProgramingLanguages() {
+    getProgrammingLanguages(): Locator {
         return this.programmingLanguageDropdown;
     }
 
     //Upload file
 
-    async goToFileSection(){
+    async goToFileSection(): Promise<void> {
         await this.fileSection.click();
     }
 
-    async uploadFile(){
-        await this.uploadFileSection.setInputFiles(pdfTestPath + '/TestingDoc.pdf');
+    async uploadFile(filePath: string = `${pdfTestPath}/TestingDoc.pdf`): Promise<void> {
+        await this.uploadFileSection.setInputFiles(filePath);
     }
 
 }

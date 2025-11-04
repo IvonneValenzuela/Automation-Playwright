@@ -44,10 +44,9 @@ test.describe('FreeRange Sandbox - Smoke (POM)', () => {
     })
 
     test.fail('Day selection from dropdown menu should work correctly', async ({}) => {
-       //const currentUrl = await frSandboxPage.getCurrentUrl();
+      
         await frSandboxPage.selectDay('Martes');
         await expect(frSandboxPage.martesDropdown).toContainText("Martes"); // heads-up: Here the test will fail
-        //await expect(currentUrl).toContain('#/action-2');  
     })
 
     test('Popup validation should work correctly', async ({}) => {
