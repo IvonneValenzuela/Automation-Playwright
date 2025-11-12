@@ -40,29 +40,24 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     
-    /*   
-      - Api Tests are not expected to be run against any device
-      - Navegacion2.spec.ts is expected to only be run in Chrome to avoid parallel runs
-    */
     // 🌐 Desktop
     {
       name: 'Google Chrome',
       use: { ...devices['Desktop Chrome'] },
       testIgnore: [
         'tests/[Aa]pi/**',
+        'tests/Assertions/**',
       ],
+      workers: 3,
     },
     
-    {
-      name: 'Firefox',
+     /* {
+      name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
-      testIgnore: [
-        'tests/[Aa]pi/**',
-        'tests/Navegacion2.spec.ts',
-      ],
-    },
+    }, */
 
     // 🔗 API (API specs only)
+    /* - Api Tests are not expected to be run against any device */
     {
       name: 'APITestonMain',
       testMatch: [
@@ -101,25 +96,6 @@ export default defineConfig({
    // },
 
     //📱 Test against mobile viewports.
-    {
-      name: 'iPhone 13',
-      use: { ...devices['iPhone 13'] },
-      testIgnore: [
-        'tests/[Aa]pi/**',
-        'tests/Navegacion2.spec.ts'
-      ],
-    }, 
-
-    {
-      name: 'iPad',
-      use: { ...devices['iPad (gen 7)'] },
-      testIgnore: [
-        'tests/[Aa]pi/**',
-        'tests/Navegacion2.spec.ts'
-      ],
-    }, 
-
-
     // {
     //   name: 'Mobile Chrome',
     //   use: { ...devices['Pixel 5'] },
