@@ -1,6 +1,6 @@
 
 import { test, expect } from '@playwright/test';
-import { FRSandboxPage } from '../Pageobjects/FRSandboxPage';
+import { FRSandboxPage } from '../../page-objects/fr-sandbox-page';
 
 test.describe('FreeRange Sandbox - Smoke (POM)', () => {
     let frSandboxPage : FRSandboxPage;   
