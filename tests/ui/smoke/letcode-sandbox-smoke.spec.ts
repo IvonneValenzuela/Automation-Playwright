@@ -1,6 +1,6 @@
 
 import { test, expect } from '@playwright/test';
-import { LCSandboxPage } from '../Pageobjects/LCSandboxPage';
+import { LCSandboxPage } from '../../page-objects/lc-sandbox-page';
 
 test.describe('Smoke test on Letcode Sandbox page', () => {
     let letCodeSandboxPage : LCSandboxPage;

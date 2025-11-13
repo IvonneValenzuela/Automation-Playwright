@@ -1,4 +1,4 @@
-import { test, Browser, Page, expect } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 
 
 test.describe('Navegación en www.freerangetesters.com', () => {

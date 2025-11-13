@@ -39,7 +39,7 @@ export const waitFiveSeconds = secondsToMs(5);
  * Base path for PDF or asset files used during tests.
  * Adjust if you move your test assets to another folder.
  */
-export const pdfTestPath = path.join(__dirname, '../../pdfprueba');
+export const pdfTestPath = path.join(__dirname, '../../test-data');
 
 // ────────────────────────────────
 // 🔄 PAGE LOAD STATES

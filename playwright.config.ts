@@ -46,7 +46,6 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
       testIgnore: [
         'tests/[Aa]pi/**',
-        'tests/Assertions/**',
       ],
       workers: 3,
     },
@@ -61,8 +60,7 @@ export default defineConfig({
     {
       name: 'APITestonMain',
       testMatch: [
-        'Api/mainRepo/**/*.spec.ts',
-        'tests/Api/E2EAPI.spec.ts'
+        'api/main-repo/**/*.spec.ts',
       ],
       use: {  
         baseURL:'https://api.github.com',
@@ -77,8 +75,8 @@ export default defineConfig({
     {
       name: 'APITest',
       testMatch: [
-        'Api/repoLifecycle/**/*.spec.ts',
-        'Api/mock/**/*.spec.ts'
+        'api/repo-lifecycle/**/*.spec.ts',
+        'api/mock/**/*.spec.ts'
       ],
       use: {  
         baseURL:'https://api.github.com',
